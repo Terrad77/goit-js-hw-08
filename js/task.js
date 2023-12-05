@@ -64,7 +64,7 @@ const images = [
     description: "Lighthouse Coast Sea",
   },
 ];
-// const gallery = document.querySelector(".gallery");
+const gallery = document.querySelector(".gallery");
 
 const createGalleryItem = (image) => {
   const galleryItem = document.createElement("li");
@@ -90,18 +90,8 @@ const createGalleryItem = (image) => {
   galleryLink.append(imageItem);
   //додаємо у <li> <a>
   galleryItem.append(galleryLink);
-
-  //   // Знаходимо батьківський елемент у img
-  //   const parentOfImg = imageItem.parentNode;
-
-  //   // Додаємо a перед img
-  //   parentOfImg.insertBefore(galleryLink, imageItem);
-
-  //   // "li"
-  //   galleryLink.append(imageItem);
-
   return galleryItem;
 };
 
 const galleryItems = images.map(createGalleryItem);
-// gallery.append(...galleryItem);
+gallery.append(...galleryItems);
