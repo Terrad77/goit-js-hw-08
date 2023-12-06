@@ -1,4 +1,5 @@
 "use strict";
+
 const images = [
   {
     preview:
@@ -65,25 +66,63 @@ const images = [
   },
 ];
 
-const markup = images
-  .map(
-    (image) =>
-      `<li class="gallery-item>"
-    <a class="gallery-link" href="${image.original}">
-      <img class="gallery-image"
+//var.1
+// const markup = images
+//   .map(
+//     (image) =>
+//       `<li class="gallery-item">
+//       <a class="gallery-link" href="${image.original}">
+//        <img class="gallery-image"
+//        src="${image.preview}"
+//        data-source="${image.original}"
+//        alt="${image.description}"
+//        />
+//       </a>
+//     </li>`
+//   )
+//   .join("");
+
+//var.2
+const markup = images.reduce(
+  (html, image) =>
+    html +
+    `<li class="gallery-item">
+      <a class="gallery-link" href="${image.original}">
+       <img class="gallery-image"
        src="${image.preview}"
        data-source="${image.original}"
        alt="${image.description}"
-      />
-    </a>
-  </li>`
-  )
-  .join("");
+       />
+      </a>
+    </li>`,
+  ""
+);
 
 const gallery = document.querySelector(".gallery");
 gallery.innerHTML = markup;
 
-// Заборона дефолтного переходу за посиланням
+//prevent default
 gallery.addEventListener("click", (event) => {
   event.preventDefault();
 });
+
+// modal window
+const instance = basicLightbox.create(`
+    <img src="assets/images/image.png" width="800" height="600">
+`);
+const modalImg = instance.element().querySelector("img");
+
+//open-close modal
+gallery.addEventListener("click", (event) => {
+  const refImgOriginal = event.target.dataset.source;
+  // console.log(refImgOriginal);
+  modalImg.src = refImgOriginal;
+  instance.show();
+  window.addEventListener("keydown", onEscKeyPress);
+});
+function onEscKeyPress(event) {
+  if (event.code === "Escape") {
+    instance.close();
+    window.removeEventListener("keydown", onEscKeyPress);
+  }
+}
