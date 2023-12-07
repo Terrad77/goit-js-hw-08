@@ -101,28 +101,36 @@ const markup = images.reduce(
 const gallery = document.querySelector(".gallery");
 gallery.innerHTML = markup;
 
-//prevent default
-gallery.addEventListener("click", (event) => {
-  event.preventDefault();
-});
+let modal;
 
-// modal window
-const instance = basicLightbox.create(`
-    <img src="assets/images/image.png" width="800" height="600">
-`);
-const modalImg = instance.element().querySelector("img");
-
-//open-close modal
-gallery.addEventListener("click", (event) => {
-  const refImgOriginal = event.target.dataset.source;
-  // console.log(refImgOriginal);
-  modalImg.src = refImgOriginal;
-  instance.show();
-  window.addEventListener("keydown", onEscKeyPress);
-});
 function onEscKeyPress(event) {
   if (event.code === "Escape") {
-    instance.close();
-    window.removeEventListener("keydown", onEscKeyPress);
+    modal.close();
   }
 }
+
+gallery.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const refImgOriginal = event.target.dataset.source;
+
+  if (refImgOriginal) {
+    console.log(refImgOriginal);
+
+    modal = basicLightbox.create(
+      `
+        <img src="${refImgOriginal}" width="1280" height="855">
+      `,
+      {
+        onShow: (modal) => {
+          window.addEventListener("keydown", onEscKeyPress);
+        },
+        onClose: (modal) => {
+          window.removeEventListener("keydown", onEscKeyPress);
+        },
+      }
+    );
+
+    modal.show();
+  }
+});
