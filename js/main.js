@@ -114,7 +114,7 @@ gallery.addEventListener("click", (event) => {
 
   const refImgOriginal = event.target.dataset.source;
 
-  if (refImgOriginal) {
+  if (refImgOriginal && event.target.nodeName === "IMG") {
     console.log(refImgOriginal);
 
     modal = basicLightbox.create(
