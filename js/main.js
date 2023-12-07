@@ -83,15 +83,31 @@ const images = [
 //   .join("");
 
 //var.2
+// const markup = images.reduce(
+//   (html, image) =>
+//     html +
+//     `<li class="gallery-item">
+//       <a class="gallery-link" href="${image.original}">
+//        <img class="gallery-image"
+//        src="${image.preview}"
+//        data-source="${image.original}"
+//        alt="${image.description}"
+//        />
+//       </a>
+//     </li>`,
+//   ""
+// );
+
+//var.3
 const markup = images.reduce(
-  (html, image) =>
+  (html, { preview, original, description }) =>
     html +
     `<li class="gallery-item">
-      <a class="gallery-link" href="${image.original}">
+      <a class="gallery-link" href="${original}">
        <img class="gallery-image"
-       src="${image.preview}"
-       data-source="${image.original}"
-       alt="${image.description}"
+       src="${preview}"
+       data-source="${original}"
+       alt="${description}"
        />
       </a>
     </li>`,
@@ -102,7 +118,6 @@ const gallery = document.querySelector(".gallery");
 gallery.innerHTML = markup;
 
 let modal;
-
 function onEscKeyPress(event) {
   if (event.code === "Escape") {
     modal.close();
