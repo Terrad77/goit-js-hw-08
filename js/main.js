@@ -130,7 +130,6 @@ gallery.addEventListener("click", (event) => {
         },
       }
     );
-
     modal.show();
   }
 });
